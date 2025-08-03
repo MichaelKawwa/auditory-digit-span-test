@@ -4,8 +4,9 @@ import Instructions from './components/Instructions';
 import DigitSpanTest, { DigitSpanResults } from './components/DigitSpanTest';
 import { ChakraProvider } from '@chakra-ui/react'
 import Results from './components/Results';
+import AdGate from './components/AdGate';
 
-export type Step = 'age' | 'instructions' | 'test' | 'results';
+export type Step = 'age' | 'instructions' | 'test' | 'ad' | 'results';
 
 const App: React.FC = () => {
   const [step, setStep] = useState<Step>('age');
@@ -31,8 +32,13 @@ const App: React.FC = () => {
           age={age}
           onComplete={(res) => {
             setResults(res);
-            setStep('results');
+            setStep('ad');
           }}
+        />
+      )}
+      {step === 'ad' && results && (
+        <AdGate
+          onComplete={() => setStep('results')}
         />
       )}
       {step === 'results' && results && age !== null && (
